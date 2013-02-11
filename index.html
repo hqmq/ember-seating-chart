@@ -1,20 +1,40 @@
 <html>
   <head>
     <title>Seating Chart Demo</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 <body>
   <script type="text/x-handlebars" data-template-name="application">
   <div class="container">
+    <h1>Seating Chart</h1>
+    {{outlet}}
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="sections">
     <div class="row">
-      <div class="span2">Sidebar</div>
+      <div class="span2">{{partial "sectionList"}}</div>
       <div class="span10">
-        <button type="button" class="btn btn-primary" data-loading-text="Loading...">Loading state</button>
+        {{outlet}}
       </div>
     </div>
-  </div>
-  </script>  
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="sections/index">
+    <div class="well">Please click on a section to see that section.</div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="section">
+    {{id}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="_sectionList">
+    {{#each section in controller}}
+      {{#linkTo 'section' section class="btn btn-primary btn-mini"}}{{section.id}}{{/linkTo}}
+    {{/each}}
+  </script>
 
   <script src="js/lib/jquery-1.8.3.min.js"></script>
   <script src="js/lib/bootstrap.min.js"></script>
