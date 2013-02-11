@@ -8,12 +8,12 @@
 <body>
   <script type="text/x-handlebars" data-template-name="application">
   <div class="container">
-    <h1>Seating Chart</h1>
     {{outlet}}
   </div>
   </script>
 
-  <script type="text/x-handlebars" data-template-name="sections">
+  <script type="text/x-handlebars" data-template-name="event">
+    <h1>Seating Chart {{id}}</h1>
     <div class="row">
       <div class="span2">{{partial "sectionList"}}</div>
       <div class="span10">
@@ -22,7 +22,7 @@
     </div>
   </script>
 
-  <script type="text/x-handlebars" data-template-name="sections/index">
+  <script type="text/x-handlebars" data-template-name="event/index">
     <div class="well">Please click on a section to see that section.</div>
   </script>
 
@@ -31,7 +31,7 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="_sectionList">
-    {{#each section in controller}}
+    {{#each section in sections}}
       {{#linkTo 'section' section class="btn btn-primary btn-mini"}}{{section.id}}{{/linkTo}}
     {{/each}}
   </script>
