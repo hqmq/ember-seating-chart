@@ -17,7 +17,7 @@ App.ApplicationRoute = Ember.Route.extend();
 
 App.EventRoute = Ember.Route.extend({
   model: function(params){
-    return App.Event.find('MEL121029A');
+    return App.Event.find(App.event_id);
   }
 });
 
@@ -45,7 +45,7 @@ App.Event = DS.Model.extend({
       return {id: item};
     });
 
-    return Ember.ArrayProxy.create({content: arr});
+    return Ember.ArrayProxy.create({content: arr, sortProperties: ['id']});
   }.property('registrations.@each.section')
 });
 
