@@ -3,6 +3,7 @@
     <title>Seating Chart Demo</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+    <link href="css/seating.css" rel="stylesheet" media="screen">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 <body>
@@ -23,16 +24,19 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="_section">
+  <h2 data-row="1">Section {{selectedSection}}</h2>
+  <div class="section">
     {{#each registration in sectionRegistrations}}
-      {{registration.id}}
-    {{else}}
-      <div class="well">Please click on a section to see that section.</div>
+      <div class="seat" {{bindAttr data-row="registration.row"}} {{bindAttr data-col="registration.column"}}>
+        <span class="name">{{registration.seat}}</span>
+      </div>
     {{/each}}
+  </div>
   </script>
 
   <script type="text/x-handlebars" data-template-name="_sectionList">
     {{#each section in sections}}
-      <a href="#" {{action "selectSection" section}} class="btn btn-primary btn-mini">
+      <a href="#" {{action "selectSection" section}} class="btn btn-primary btn-large">
         {{section}}
       </a>
     {{/each}}

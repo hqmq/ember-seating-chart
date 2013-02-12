@@ -1,0 +1,29 @@
+.section{
+	position:relative;
+}
+
+.seat {
+	position: absolute;
+	height: 100px;
+	width: 100px;
+	background-color: #eeeeee;
+}
+
+[data-row='1'] {
+	top: 10px;
+}
+[data-row='2'] {
+	top: 120px;
+}
+[data-row='3'] {
+	top: 230px;
+}
+[data-col='1'] {
+	left: 10px;
+}
+[data-col='2'] {
+	left: 120px;
+}
+[data-col='3'] {
+	left: 230px;
+}
