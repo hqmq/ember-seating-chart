@@ -2,9 +2,7 @@ window.App = Ember.Application.create();
 
 //Router
 App.Router.map(function() {
-  this.resource('event', function(){
-    this.resource('section', { path: ':section_id' } );
-  });
+  this.resource('event');
 });
 
 App.IndexRoute = Ember.Route.extend({
@@ -21,16 +19,12 @@ App.EventRoute = Ember.Route.extend({
   }
 });
 
-App.SectionRoute = Ember.Route.extend({
-  model: function(params){
-    return {id: params['section_id']};
+//Controllers
+App.EventController = Ember.ObjectController.extend({
+  selectSection: function(section){
+    this.get('model').set('selectedSection', section);
   }
 });
-
-//Controllers
-App.EventController = Ember.ObjectController.extend();
-App.SectionController = Ember.ObjectController.extend();
-
 
 //Models
 App.Store = DS.Store.extend({
@@ -41,20 +35,52 @@ App.Store = DS.Store.extend({
 App.Event = DS.Model.extend({
   registrations: DS.hasMany('App.Registration'),
   sections: function(){
-    var arr = this.get('registrations').getEach('section').uniq().map( function(item){
-      return {id: item};
-    });
+    var arr = this.get('registrations').getEach('section').uniq();
+    return Ember.ArrayProxy.create({content: arr});
+  }.property('registrations.@each.section'),
 
-    return Ember.ArrayProxy.create({content: arr, sortProperties: ['id']});
-  }.property('registrations.@each.section')
+  rows: function(){
+    return this.get('registrations').getEach('row').reduce(function(agg,item){
+      return item > agg ? item : agg;
+    }, 1);
+  }.property('registrations.@each.row'),
+
+  columns: function(){
+    return this.get('registrations').getEach('column').reduce(function(agg,item){
+      return item > agg ? item : agg;
+    }, 1);
+  }.property('registrations.@each.column'),
+
+  registrationsInSection: function(section){
+    this.get('registrations').filter( function(item){
+      return item.get('section') == section;
+    });
+  }.property('registrations.@each.section'),
+
+  selectedSection: DS.attr('string'),
+  sectionRegistrations: function(){
+    var section = this.get('selectedSection');
+    return this.get('registrations').filter( function(item){
+      return item.get('section') == section;
+    });
+  }.property('selectedSection', 'registrations')
 });
 
 App.Registration = DS.Model.extend({
   event: DS.belongsTo('App.Event'),
   seat: DS.attr('string'),
+  seatParts: function(){
+    return this.get('seat') ? this.get('seat').match(/^([A-Z])(\d)-(\d)$/) : null;
+  }.property('seat'),
   section: function(){
-    return (this.get('seat') || '').substr(0,1);
-  }.property('seat')
+    return this.get('seatParts') ? this.get('seatParts')[1] : '';
+  }.property('seatParts'),
+  row: function(){
+    return this.get('seatParts') ? this.get('seatParts')[2] : 0;
+  }.property('seatParts'),
+  column: function(){
+    return this.get('seatParts') ? this.get('seatParts')[3] : 0;
+  }.property('seatParts')
 });
 
 App.Event.FIXTURES = [

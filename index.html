@@ -15,24 +15,26 @@
   <script type="text/x-handlebars" data-template-name="event">
     <h1>Seating Chart {{id}}</h1>
     <div class="row">
-      <div class="span2">{{partial "sectionList"}}</div>
-      <div class="span10">
-        {{outlet}}
+      <div class="span1">{{partial "sectionList"}}</div>
+      <div class="span11">
+        {{partial "section"}}
       </div>
     </div>
   </script>
 
-  <script type="text/x-handlebars" data-template-name="event/index">
-    <div class="well">Please click on a section to see that section.</div>
-  </script>
-
-  <script type="text/x-handlebars" data-template-name="section">
-    {{id}}
+  <script type="text/x-handlebars" data-template-name="_section">
+    {{#each registration in sectionRegistrations}}
+      {{registration.id}}
+    {{else}}
+      <div class="well">Please click on a section to see that section.</div>
+    {{/each}}
   </script>
 
   <script type="text/x-handlebars" data-template-name="_sectionList">
     {{#each section in sections}}
-      {{#linkTo 'section' section class="btn btn-primary btn-mini"}}{{section.id}}{{/linkTo}}
+      <a href="#" {{action "selectSection" section}} class="btn btn-primary btn-mini">
+        {{section}}
+      </a>
     {{/each}}
   </script>
 
