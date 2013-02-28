@@ -25,9 +25,7 @@ App.ChartController = Ember.ObjectController.extend({
     this.get('model').set('selectedSection', section);
   },
   editRegistration: function(registration){
-    console.log('edit registration', registration);
-    var m = App.EditModal.create();
-    m.append();
+    this.get('model').set('registrationEditing', registration);
   }
 });
 
@@ -39,6 +37,7 @@ App.Store = DS.Store.extend({
 App.Event = DS.Model.extend({
   registrations: DS.hasMany('App.Registration'),
   name: DS.attr('string'),
+  registrationEditing: null,
   sections: function(){
     var arr = this.get('registrations').getEach('section').uniq().sort();
     return Ember.ArrayProxy.create({content: arr, sortAscending: true});
@@ -93,55 +92,4 @@ App.Registration = DS.Model.extend({
   column: function(){
     return this.get('seatParts') ? this.get('seatParts')[3] : 0;
   }.property('seatParts')
-});
-
-App.ModalHeaderView = Ember.View.extend({
-  classNames: ["modal-header"],
-  contentBinding: "parentView.content",
-  titleBinding: "parentView.title",
-  defaultTemplate: Ember.Handlebars.compile("<a href=\"#\" {{action close target=\"view.parentView\"}} class=\"close\">x</a>\n<h3>{{view.title}}</h3>")
-});
-
-App.ModalFooterView = Ember.View.extend({
-  classNames: ["modal-footer"],
-  contentBinding: "parentView.content",
-  defaultTemplate: Ember.Handlebars.compile('the footer')
-});
-
-App.ModalBodyView = Ember.View.extend({
-  classNames: ["modal-body"],
-  contentBinding: "parentView.content",
-  defaultTemplate: Ember.Handlebars.compile('the body')
-});
-
-App.ModalView = Ember.ContainerView.extend({
-  classNames: ["modal"],
-  childViews: (function() {
-    return [this.get('headerView'), this.get('bodyView'), this.get('footerView')].compact();
-  }).property('headerView', 'bodyView', 'footerView'),
-  title: "Default Title",
-  hasCloseButton: true,
-  headerView: App.ModalHeaderView,
-  bodyView: App.ModalBodyView,
-  footerView: null,
-  close: function(e) {
-    //e.preventDefault();
-    return this.destroy();
-  }
-});
-
-App.ModalView.reopenClass({
-  display: function(options) {
-    var modal;
-    if (options == null) {
-      options = {};
-    }
-    modal = this.create(options);
-    modal.append();
-    return modal;
-  }
-});
-
-App.EditModal = App.ModalView.extend({
-
 });
