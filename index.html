@@ -10,7 +10,6 @@
   <script type="text/x-handlebars" data-template-name="application">
   <div class="container">
     {{outlet}}
-    {{view App.EditModal}}
   </div>
   </script>
 
@@ -29,7 +28,7 @@
   <div class="section">
     {{#each registration in sectionRegistrations}}
       <div class="seat" {{bindAttr data-row="registration.row"}} {{bindAttr data-col="registration.column"}}>
-        <span class="name">{{registration.seat}}</span>
+        <a href="#" {{action editRegistration registration}}><span class="name">{{registration.seat}}</span></a>
       </div>
     {{/each}}
   </div>

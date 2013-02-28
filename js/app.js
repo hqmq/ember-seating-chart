@@ -23,6 +23,11 @@ App.ChartRoute = Ember.Route.extend({
 App.ChartController = Ember.ObjectController.extend({
   selectSection: function(section){
     this.get('model').set('selectedSection', section);
+  },
+  editRegistration: function(registration){
+    console.log('edit registration', registration);
+    var m = App.EditModal.create();
+    m.append();
   }
 });
 
