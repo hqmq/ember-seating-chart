@@ -9,6 +9,10 @@
 	background-color: #eeeeee;
 }
 
+.section-list a {
+	margin-bottom: 20px;
+}
+
 [data-row='1'] {
 	top: 10px;
 }

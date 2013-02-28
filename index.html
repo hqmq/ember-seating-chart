@@ -10,13 +10,14 @@
   <script type="text/x-handlebars" data-template-name="application">
   <div class="container">
     {{outlet}}
+    {{view App.EditModal}}
   </div>
   </script>
 
-  <script type="text/x-handlebars" data-template-name="event">
+  <script type="text/x-handlebars" data-template-name="chart">
     <h1>Seating Chart {{name}}</h1>
     <div class="row">
-      <div class="span1">{{partial "sectionList"}}</div>
+      <div class="span1 section-list">{{partial "sectionList"}}</div>
       <div class="span11">
         {{partial "section"}}
       </div>
