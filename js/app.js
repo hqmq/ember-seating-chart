@@ -28,12 +28,12 @@ App.EventController = Ember.ObjectController.extend({
 
 //Models
 App.Store = DS.Store.extend({
-  revision: 11,
-  adapter: 'DS.FixtureAdapter'
+  revision: 11
 })
 
 App.Event = DS.Model.extend({
   registrations: DS.hasMany('App.Registration'),
+  name: DS.attr('string'),
   sections: function(){
     var arr = this.get('registrations').getEach('section').uniq();
     return Ember.ArrayProxy.create({content: arr});
@@ -89,22 +89,3 @@ App.Registration = DS.Model.extend({
     return this.get('seatParts') ? this.get('seatParts')[3] : 0;
   }.property('seatParts')
 });
-
-App.Event.FIXTURES = [
-  {id: 'MEL121029A', registrations:[1,2,3,4,5,6,7,8,9,10,11,12]}
-]
-
-App.Registration.FIXTURES = [
-  {id: 1, seat: 'C1-1', event_id: 'MEL121029A'},
-  {id: 2, seat: 'A2-1', event_id: 'MEL121029A'},
-  {id: 3, seat: 'A1-2', event_id: 'MEL121029A'},
-  {id: 4, seat: 'A1-3', event_id: 'MEL121029A'},
-  {id: 5, seat: 'A3-3', event_id: 'MEL121029A'},
-  {id: 6, seat: 'D1-1', event_id: 'MEL121029A'},
-  {id: 7, seat: 'D1-2', event_id: 'MEL121029A'},
-  {id: 8, seat: 'D1-3', event_id: 'MEL121029A'},
-  {id: 9, seat: 'B1-1', event_id: 'MEL121029A'},
-  {id: 10, seat: 'B2-3', event_id: 'MEL121029A'},
-  {id: 11, seat: 'B3-3', event_id: 'MEL121029A'},
-  {id: 12, seat: 'B2-2', event_id: 'MEL121029A'}
-]

@@ -1,0 +1,29 @@
+{
+  "event": {
+    "id": "e1",
+    "name": "MEL121029A",
+    "registrations": ["r1","r2","r3","r4"]
+  },
+  "registrations": [
+    {
+      "id": "r1",
+      "seat": "C1-1",
+      "event_id": "MEL121029A"
+    },
+    {
+      "id": "r2",
+      "seat": "A2-1",
+      "event_id": "MEL121029A"
+    },
+    {
+      "id": "r3",
+      "seat": "A1-2",
+      "event_id": "MEL121029A"
+    },
+    {
+      "id": "r4",
+      "seat": "A1-3",
+      "event_id": "MEL121029A"
+    }
+  ]
+}
